@@ -42,3 +42,7 @@ jobs:
           RELEASE_TAG=`git describe --tags`
           echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
           gh release create ${RELEASE_TAG} --title "${RELEASE_TAG}"
+          npm version from-git --no-commit-hooks --no-git-tag-version
+          git add .
+          git commit -m"[ci skip] - bump npm package.json file with new release version ${RELEASE_TAG}"
+          git push

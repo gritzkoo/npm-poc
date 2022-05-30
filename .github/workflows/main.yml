@@ -28,17 +28,18 @@ jobs:
         run: npm run test
         env:
           CI: true
-      - name: Verify if gh exists
-        run: gh --version
       - name: Publish on NPM
         uses: mikeal/merge-release@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Create release
-        # env:
-        #   GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
+          echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+          whoami
+          ls -la
+          pwd
+          echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
           RELEASE_TAG=`git describe --tags`
           echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
           gh release create ${RELEASE_TAG} --title "${RELEASE_TAG}"

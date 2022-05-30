@@ -15,7 +15,7 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v3
       - name: Verify permissions
-        run: ls -la
+        run: chmod 777 package.json
       - name: Configure Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -33,11 +33,20 @@ jobs:
         run: npm run test
         env:
           CI: true
+
+      - name: "Automated Version Bump"
+        uses: "phips28/gh-action-bump-version@master"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          skip-tag: "true"
+          
       - name: Publish on NPM
         uses: mikeal/merge-release@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
       - name: Create release
         run: |
           echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
@@ -48,11 +57,11 @@ jobs:
           RELEASE_TAG=`git describe --tags`
           echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
           gh release create ${RELEASE_TAG} --title "${RELEASE_TAG}"
-          npm version from-git --no-commit-hooks --no-git-tag-version
-          if [[ `git diff`]]; then
-            git config --global user.name 'gritzkoo'
-            git config --global user.email 'gritzkoo@hotmail.com'
-            git add .
-            git commit -m"[ci skip] - bump npm package.json file with new release version ${RELEASE_TAG}"
-            git push
-          fi
+          # npm version from-git --no-commit-hooks --no-git-tag-version
+          # if [[ `git diff`]]; then
+          #   git config --global user.name 'gritzkoo'
+          #   git config --global user.email 'gritzkoo@hotmail.com'
+          #   git add .
+          #   git commit -m"[ci skip] - bump npm package.json file with new release version ${RELEASE_TAG}"
+          #   git push
+          # fi

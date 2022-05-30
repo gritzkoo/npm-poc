@@ -1,5 +1,5 @@
 {
-  "name": "npm-poc",
+  "name": "gritzkoo-npm-poc",
   "version": "1.0.0",
   "description": "Poc to automate github actions deployment",
   "main": "index.js",

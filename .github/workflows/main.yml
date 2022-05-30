@@ -38,4 +38,4 @@ jobs:
       - name: Create release
         run: |
           RELEASE_TAG=`git describe --tags`
-          gh release create ${RELEASE_TAG} --title "${RELEASE_TAG}" --body "${{ github.event.head_commit.message }}"
+          gh release create ${RELEASE_TAG} --title "${RELEASE_TAG}"

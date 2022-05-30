@@ -30,3 +30,11 @@ jobs:
           CI: true
       - name: Verify if gh exists
         run: gh --version
+      - name: Publish on NPM
+        uses: mikeal/merge-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Create release
+        run: |
+          gh release create $(git describe --tags) --title "${{github.event.head_commit.title}}" --body "${{ github.event.head_commit.message }}"

@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: validate commit message to allow PR
         run: |
-          TITLE=${{github.event.push_event.message}}
+          TITLE="${{github.event.head_commit.message}}"
           TAGNN=`echo $TITLE | grep -Eo "^\[[a-z]+\]"`
           if [ "TAGNN" == "[major]" ]; then
             echo ::set-output name=versioning::major

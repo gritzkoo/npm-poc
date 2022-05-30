@@ -9,17 +9,19 @@ jobs:
       - name: validate commit message to allow PR
         run: |
           TITLE="${{github.event.head_commit.message}}"
-          TAGNN=`echo $TITLE | grep -Eo "^\[[a-z]+\]"`
-          if [ "$TAGNN" == "[major]" ]; then
-            echo "::set-output name=versioning::major"
-          elif [ "$TAGNN" == "[minor]" ]; then
-            echo "::set-output name=versioning::minor"
-          elif [ "$TAGNN" == "[patch]" ]; then
-            echo "::set-output name=versioning::path"
+          if [[ `echo $TITLE | grep -Eo "^\[[a-z]+\]"` ]]; then
+            TAGNN=`echo $TITLE | grep -Eo "^\[[a-z]+\]"`
+            if [ "$TAGNN" == "[major]" ]; then
+              echo "::set-output name=versioning::major"
+            elif [ "$TAGNN" == "[minor]" ]; then
+              echo "::set-output name=versioning::minor"
+            elif [ "$TAGNN" == "[patch]" ]; then
+              echo "::set-output name=versioning::path"
+            fi
           else
             echo "message out of pattern. needs [[major], [minor], [patch]]";
             exit 1
-          fi;
+          fi
   test:
     runs-on: ubuntu-latest
     needs:

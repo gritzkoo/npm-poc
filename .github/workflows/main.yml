@@ -11,11 +11,11 @@ jobs:
           TITLE="${{github.event.head_commit.message}}"
           TAGNN=`echo $TITLE | grep -Eo "^\[[a-z]+\]"`
           if [ "TAGNN" == "[major]" ]; then
-            echo ::set-output name=versioning::major
+            echo "::set-output name=versioning::major"
           elif [ "TAGNN" == "[minor]" ]; then
-            echo ::set-output name=versioning::minor
+            echo "::set-output name=versioning::minor"
           elif [ "TAGNN" == "[patch]" ]; then
-            echo ::set-output name=versioning::path
+            echo "::set-output name=versioning::path"
           else
             echo "message out of pattern. needs [[major], [minor], [patch]]";
             exit 1

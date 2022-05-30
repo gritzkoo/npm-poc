@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Git Checkout
         uses: actions/checkout@v3
+      - name: Verify permissions
+        run: ls -la
       - name: Configure Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:

@@ -37,4 +37,5 @@ jobs:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Create release
         run: |
-          gh release create $(git describe --tags) --title "${{github.event.head_commit.title}}" --body "${{ github.event.head_commit.message }}"
+          RELEASE_TAG=`git describe --tags`
+          gh release create ${RELEASE_TAG} --title "${RELEASE_TAG}" --body "${{ github.event.head_commit.message }}"

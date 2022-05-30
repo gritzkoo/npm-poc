@@ -5,6 +5,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
     strategy:
       matrix:
         node-version: [16.x]

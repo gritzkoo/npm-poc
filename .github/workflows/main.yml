@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x, 16.x]
+        node-version: [16.x]
     steps:
       - name: Git Checkout
         uses: actions/checkout@v3
@@ -28,3 +28,5 @@ jobs:
         run: npm run test
         env:
           CI: true
+      - name: Verify if gh exists
+        run: gh --version

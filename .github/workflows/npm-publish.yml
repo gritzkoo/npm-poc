@@ -33,7 +33,8 @@ jobs:
           ATUAL_VERSION=`echo ${REVIEW_JS} | jq '.version'`
           if [[ `echo ${REVIEW_JS} | jq -c '.versions[]'` ]]; then
             echo ${REVIEW_JS} | jq -c '.versions[]' | while read line; do
-              if [ "$line" == "$ATUAL_VERSION" ]; then
+              if [ "${line}" == "${ATUAL_VERSION}" ]; then
+                echo "$line is equals to ${ATUAL_VERSION}"
                 echo "Version already released!"
                 exit 1
               fi

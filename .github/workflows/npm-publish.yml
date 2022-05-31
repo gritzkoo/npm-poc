@@ -16,9 +16,33 @@ jobs:
           node-version: 16
       - run: npm ci
       - run: npm test
+  
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Validate if can be published
+        run: |
+          REVIEW_JS=`npm view --json`
+          ATUAL_VERSION=`echo ${REVIEW_JS} | jq '.version'`
+          if [[ `echo ${REVIEW_JS} | jq -c '.versions[]'` ]]; then
+            echo ${REVIEW_JS} | jq -c '.versions[]' | while read line; do
+              if [ "$line" == "$ATUAL_VERSION" ]; then
+                echo "Version already released!"
+                exit 1
+              fi
+            done
+          else
+            echo "all clear to go"
+          fi
 
   publish-gpr:
-    needs: build
+    needs: 
+      - build
+      - validate
     runs-on: ubuntu-latest
     permissions:
       contents: write

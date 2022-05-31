@@ -20,6 +20,7 @@ jobs:
       - run: npm test
 
   validate:
+    name: check version is valid to release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

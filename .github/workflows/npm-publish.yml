@@ -30,7 +30,7 @@ jobs:
       - name: Validate if can be published
         run: |
           REVIEW_JS=`npm view --json`
-          ATUAL_VERSION=`echo ${REVIEW_JS} | jq '.version'`
+          ATUAL_VERSION=`cat package.json | jq '.version'`
           if [[ `echo ${REVIEW_JS} | jq -c '.versions[]'` ]]; then
             echo ${REVIEW_JS} | jq -c '.versions[]' | while read line; do
               if [ "${line}" == "${ATUAL_VERSION}" ]; then

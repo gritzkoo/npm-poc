@@ -43,4 +43,5 @@ jobs:
         run: |
           NEW_TAG=`cat package.json | jq ".version"`
           NOTES=`git log -1 --pretty=format:"%s"`
+          echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
           gh release create ${NEW_TAG} --title "${NEW_TAG}" --notes "${NOTES}"

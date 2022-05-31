@@ -4,6 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       newversion:
+        type: choice
+        options:
+          - major
+          - minor
+          - path
+        default: path
         description: 'Semantic Version Bump Type (major minor patch)'
         required: true
 

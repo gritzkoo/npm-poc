@@ -3,7 +3,13 @@
 
 name: github-npm-publish
 on:
-  workflow_dispatch
+  workflow_dispatch:
+    input:
+      type: choise
+      options:
+        - val1
+        - val2
+        - val3
 
 jobs:
   build:
